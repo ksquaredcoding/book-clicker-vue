@@ -8,7 +8,7 @@ import { ValueSchema } from '../models/Value'
 class DbContext {
   Values = mongoose.model('Value', ValueSchema);
   Account = mongoose.model('Account', AccountSchema);
-  Stats = mongoose.model('Stat', StatsSchema);
+  Stats = mongoose.model('Stats', StatsSchema);
   AutoUpgrades = mongoose.model('AutoUpgrade', AutoUpgradeSchema);
   ClickUpgrades = mongoose.model('ClickUpgrade', ClickUpgradeSchema);
 }

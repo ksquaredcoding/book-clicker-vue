@@ -3,6 +3,7 @@ const Schema = mongoose.Schema
 
 export const StatsSchema = new Schema(
   {
+    bookTotal: { type: Number, required: true, default: 0 },
     booksPerSec: { type: Number, required: true, default: 0 },
     booksPerClick: { type: Number, required: true, default: 1 },
     turned: { type: Boolean, required: true, default: false },

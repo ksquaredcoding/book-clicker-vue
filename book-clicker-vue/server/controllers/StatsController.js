@@ -8,7 +8,8 @@ export class StatsController extends BaseController {
     this.router
       .use(Auth0Provider.getAuthorizedUserInfo)
       .get('', this.getStats)
-      .post('', this.create)
+      .post('', this.createStats)
+      .put('', this.updateStats)
   }
 
   async getStats(req, res, next) {
@@ -20,11 +21,22 @@ export class StatsController extends BaseController {
     }
   }
 
-  async create(req, res, next) {
+  async createStats(req, res, next) {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
-      req.body.creatorId = req.userInfo.id
-      res.send(req.body)
+      req.body.accountId = req.userInfo.id
+      const stats = await statsService.createStats(req.body)
+      res.send(stats)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async updateStats(req, res, next) {
+    try {
+      req.body.accountId = req.userInfo.id
+      const stats = await statsService.updateStats(req.body)
+      res.send(stats)
     } catch (error) {
       next(error)
     }

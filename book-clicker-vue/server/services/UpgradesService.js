@@ -1,27 +1,60 @@
 import { dbContext } from "../db/DbContext.js"
-import { BadRequest } from "../utils/Errors.js"
+import { BadRequest, Forbidden } from "../utils/Errors.js"
+import { statsService } from "./StatsService.js"
 
 class UpgradesService {
   async buyClick(upgradeData) {
-    const upgrade = await this.getClickByTitle(upgradeData.title)
+    const upgrade = await this.getClickByTitle(upgradeData.title, upgradeData.accountId)
+    const stats = await statsService.getStats(upgradeData.accountId)
     if (!upgrade) {
+      // @ts-ignore
+      if (upgradeData.price > stats.bookTotal) {
+        throw new Forbidden("You need more books to purchase this click upgrade")
+      }
       const newUpgrade = await dbContext.ClickUpgrades.create(upgradeData)
+      // @ts-ignore
+      newUpgrade.price *= 2
+      await newUpgrade.save()
       return newUpgrade
     }
     // @ts-ignore
+    if (upgrade.price > stats.bookTotal) {
+      throw new Forbidden("You need more books to purchase this click upgrade")
+    }
+    // @ts-ignore
     upgrade.quantity++
+    // @ts-ignore
+    upgrade.price *= 2
+    await upgrade.save()
     return upgrade
   }
+
   async buyAuto(upgradeData) {
-    const upgrade = await this.getAutoByTitle(upgradeData.title)
+    const upgrade = await this.getAutoByTitle(upgradeData.title, upgradeData.accountId)
+    const stats = await statsService.getStats(upgradeData.accountId)
     if (!upgrade) {
+      // @ts-ignore
+      if (upgradeData.price > stats.bookTotal) {
+        throw new Forbidden("You need more books to purchase this auto upgrade")
+      }
       const newUpgrade = await dbContext.AutoUpgrades.create(upgradeData)
+      // @ts-ignore
+      newUpgrade.price *= 2
+      await newUpgrade.save()
       return newUpgrade
     }
     // @ts-ignore
+    if (upgrade.price > stats.bookTotal) {
+      throw new Forbidden("You need more books to purchase this auto upgrade")
+    }
+    // @ts-ignore
     upgrade.quantity++
+    // @ts-ignore
+    upgrade.price *= 2
+    await upgrade.save()
     return upgrade
   }
+
   async getAutoUpgrades(accountId) {
     const autoUpgrades = await dbContext.AutoUpgrades.find({ accountId })
     return autoUpgrades
@@ -31,13 +64,13 @@ class UpgradesService {
     return clickUpgrades
   }
 
-  async getClickByTitle(title) {
-    const upgrade = await dbContext.ClickUpgrades.findOne({ title })
+  async getClickByTitle(title, accountId) {
+    const upgrade = await dbContext.ClickUpgrades.findOne({ title, accountId })
     return upgrade
   }
-  // TODO add check for account to match upgrade
-  async getAutoByTitle(title) {
-    const upgrade = await dbContext.AutoUpgrades.findOne({ title })
+
+  async getAutoByTitle(title, accountId) {
+    const upgrade = await dbContext.AutoUpgrades.findOne({ title, accountId })
     return upgrade
   }
 
