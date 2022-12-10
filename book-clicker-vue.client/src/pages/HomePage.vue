@@ -1,17 +1,21 @@
 <template>
-  <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="home-card p-5 bg-white rounded elevation-3">
-      <img
-        src="https://bcw.blob.core.windows.net/public/img/8600856373152463"
-        alt="CodeWorks Logo"
-        class="rounded-circle"
-      >
-      <h1 class="my-5 bg-dark text-white p-3 rounded text-center">
-        Vue 3 Starter
-      </h1>
+  <div class="row justify-content-center align-items-center g-2">
+    <div class="col-8 book-image ">
+      <div class="justify-content-center align-items-center d-flex">
+        <img src="../assets/img/Click-Book.png" alt="Click Book" class="book-image-float">
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between">
+    <div class="col-md-2 m-2 p-2">
+      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#shopModal">SHOP</button>
+    </div>
+    <div class="col-md-2 m-2 p-2">
+      <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#statsModal">STATS</button>
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -21,24 +25,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.home {
-  display: grid;
-  height: 80vh;
-  place-content: center;
-  text-align: center;
-  user-select: none;
 
-  .home-card {
-    width: 50vw;
+<style lang="scss" scoped>
 
-    >img {
-      height: 200px;
-      max-width: 200px;
-      width: 100%;
-      object-fit: contain;
-      object-position: center;
-    }
-  }
-}
 </style>

@@ -1,0 +1,27 @@
+.book-image {
+  background-color: rgb(154, 131, 102);
+  border-radius: 5%;
+  border: .5rem solid black;
+  transition: all .2s ease;
+  height: max-content;
+  width: max-content;
+}
+
+.book-image-float {
+  animation: book-float 5s ease infinite;
+  height: 300px;
+  width: 500px;
+  flex-shrink: inherit;
+}
+
+@keyframes book-float {
+
+  0%,
+  100% {
+    transform: translateY(-1rem);
+  }
+
+  50% {
+    transform: translateY(0rem);
+  }
+}

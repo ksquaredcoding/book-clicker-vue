@@ -3,9 +3,11 @@
 @import "./_overrides.scss";
 @import "./_utilities.scss";
 @import "./loaders.scss";
+@import "./secondary.scss";
 
-body{
+body {
   overscroll-behavior: none;
+  overflow-x: hidden;
 }
 
 #app {
@@ -30,6 +32,7 @@ select {
     &:valid {
       border: 1px solid $success;
     }
+
     &:invalid {
       border: 1px solid $danger;
     }
